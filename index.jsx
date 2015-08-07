@@ -22,14 +22,14 @@ Chart.defaults.global.scaleOverride = true;
 Chart.defaults.global.scaleSteps = 10;
 Chart.defaults.global.scaleStepWidth = 10;
 Chart.defaults.global.scaleStartValue = 0;
-Chart.defaults.global.scaleFontSize = 16;
+Chart.defaults.global.scaleFontSize = 28;
 
 var JPMathData = {
     labels: ["Period 1", "Period 2", "Period 3", "Period 4", "Period 5", "Period 6"],
     datasets: [
         {
             label: "2013-2014 Math averages for Jimmy Perkins",
-            fillColor: "rgba(160, 27, 18, 0.2)",
+            fillColor: "rgba(160, 27, 18, 0.7)",
             strokeColor: "#B61B12",
             pointColor: "#B61B12",
             pointStrokeColor: "#fff",
@@ -39,9 +39,45 @@ var JPMathData = {
         },
         {
             label: "2014-2015 Math averages for Jimmy Perkins",
-            fillColor: "#abcbf5",
+            fillColor: "rgba(171, 203, 245, 0.7)",
             strokeColor: "#6aa8f5",
             pointColor: "#6aa8f5",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "#fff",
+            data: [88, 85, 89, 82, 80, 85]
+        }
+    ]
+};
+
+var JPMRWRData = {
+    labels: ["Period 1", "Period 2", "Period 3", "Period 4", "Period 5", "Period 6"],
+    datasets: [
+        {
+            label: "Reading",
+            fillColor: "rgba(160, 27, 18, 0.7)",
+            strokeColor: "#B61B12",
+            pointColor: "#B61B12",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "#fff",
+            data: [91, 95, 90, 91, 90, 94]
+        },
+        {
+            label: "Writing",
+            fillColor: "rgba(171, 203, 245, 0.7)",
+            strokeColor: "#6aa8f5",
+            pointColor: "#6aa8f5",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "#fff",
+            data: [98, 95, 99, 94, 93, 95]
+        },
+        {
+            label: "Arithmetic",
+            fillColor: "rgba(203, 247, 198, 0.7)",
+            strokeColor: "#81ca79",
+            pointColor: "#81ca79",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "#fff",
@@ -55,7 +91,7 @@ var AttendanceData = {
     datasets: [
         {
             label: "2009-2010 Absences",
-            fillColor: "rgba(160, 27, 18, 0.2)",
+            fillColor: "rgba(160, 27, 18, 0.7)",
             strokeColor: "#B61B12",
             pointColor: "#B61B12",
             pointStrokeColor: "#fff",
@@ -65,13 +101,13 @@ var AttendanceData = {
         },
         {
             label: "2010-2011 Absences",
-            fillColor: "rgba(171, 203, 245, 0.3)",
+            fillColor: "rgba(171, 203, 245, 0.7)",
             strokeColor: "#6aa8f5",
             pointColor: "#6aa8f5",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "#fff",
-            data: [79, 71, 43, 62, 46, 14, 0, 0, 14, 62, 82, 89]
+            data: [7, 9, 32, 76, 27, 120, 79, 88, 65, 20, 0, 0]
         }
     ]
 };
@@ -84,6 +120,7 @@ var Body = React.createClass({
         this.renderRadChart();
         this.renderLineChart1();
         this.renderBarChart1();
+        this.renderLineChart2();
 
     },
 
@@ -112,12 +149,18 @@ var Body = React.createClass({
                     <canvas id="barChart1" className="chart"></canvas>
                     <div id="barChartLegend1" ></div>
                 </div>
+                <div className="chart-placeholder">
+                    <canvas id="lineChart2" className="chart"></canvas>
+                    <div id="lineChartLegend2" ></div>
+                </div>
             </div>
         </div>;
     },
 
     renderLineChart() {
         var options = {
+            scaleGridLineWidth : 1,
+            scaleGridLineColor : "rgba(0,0,0,.5)",
             legendTemplate : template,
             pointDotRadius : 6,
             bezierCurve : false
@@ -129,18 +172,26 @@ var Body = React.createClass({
 
     renderBarChart() {
         var options = {
+            scaleGridLineWidth : 1,
+            scaleGridLineColor : "rgba(0,0,0,.5)",
             legendTemplate : template
         };
         var ctx = document.getElementById("barChart").getContext("2d");
-        var chart = new Chart(ctx).Bar(JPMathData, options);
+        var chart = new Chart(ctx).Bar(JPMRWRData, options);
         document.getElementById("barChartLegend").innerHTML = chart.generateLegend();
     },
 
     renderRadChart() {
         var options = {
+            angleLineWidth : 1,
+            angleLineColor : "rgba(0,0,0,.5)",
             pointDotRadius : 4,
-            pointLabelFontSize : 16,
-            legendTemplate : template
+            pointLabelFontSize : 28,
+            legendTemplate : template,
+            scaleOverride : true,
+            scaleSteps : 12,
+            scaleStepWidth : 10,
+            scaleStartValue : 0
         };
         var ctx = document.getElementById("radChart").getContext("2d");
         var chart = new Chart(ctx).Radar(AttendanceData, options);
@@ -149,6 +200,8 @@ var Body = React.createClass({
 
     renderLineChart1() {
         var options = {
+            scaleGridLineWidth : 1,
+            scaleGridLineColor : "rgba(0,0,0,.5)",
             legendTemplate : template,
             pointDotRadius : 6,
             bezierCurve : false,
@@ -164,6 +217,8 @@ var Body = React.createClass({
 
     renderBarChart1() {
         var options = {
+            scaleGridLineWidth : 1,
+            scaleGridLineColor : "rgba(0,0,0,.5)",
             legendTemplate : template,
             scaleOverride : true,
             scaleSteps : 3,
@@ -171,9 +226,26 @@ var Body = React.createClass({
             scaleStartValue : 70
         };
         var ctx = document.getElementById("barChart1").getContext("2d");
-        var chart = new Chart(ctx).Bar(JPMathData, options);
+        var chart = new Chart(ctx).Bar(JPMRWRData, options);
         document.getElementById("barChartLegend1").innerHTML = chart.generateLegend();
-    }
+    },
+
+    renderLineChart2() {
+        var options = {
+            pointDotRadius : 4,
+            pointLabelFontSize : 28,
+            scaleGridLineWidth : 1,
+            scaleGridLineColor : "rgba(0,0,0,.5)",
+            legendTemplate : template,
+            scaleOverride : true,
+            scaleSteps : 12,
+            scaleStepWidth : 10,
+            scaleStartValue : 0
+        };
+        var ctx = document.getElementById("lineChart2").getContext("2d");
+        var chart = new Chart(ctx).Line(AttendanceData, options);
+        document.getElementById("lineChartLegend2").innerHTML = chart.generateLegend();
+    },
 });
 
 React.render(<Body />, document.getElementById('content-holder'));
