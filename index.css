@@ -1,0 +1,34 @@
+body {
+    background-color: #FFF;
+    margin: 20px;
+}
+
+p {
+    text-indent: 1em;
+}
+
+ul li{
+   list-style-type:none;
+   display: flex;
+   font-size: 18px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+}
+
+.legend-bullet {
+    width: 20px;
+    height: 20px;
+    margin: 0 1em 1em 0;
+}
+
+.chart {
+    width: 600px;
+    height: 450px;
+}
+
+.chart-placeholder {
+    margin: 0 5em 10em 0
+}

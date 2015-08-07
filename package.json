@@ -1,0 +1,30 @@
+{
+  "name": "Chart-Playground",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Place to tinker with chartjs",
+  "scripts": {
+    "start": "npm run serve | npm run dev",
+    "serve": "./node_modules/.bin/http-server -p 8080",
+    "dev": "webpack-dev-server --progress --colors --port 8090"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:StillLearnin/chart-playground.git"
+  },
+  "author": "Melvin Ray Herr <stilllearnin@thettpost.com>",
+  "dependencies": {
+    "chart.js": "^1.0.2",
+    "classnames": "^2.1.2",
+    "normalize.css": "^3.0.3",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "css-loader": "^0.15.1",
+    "http-server": "~0.7.1",
+    "jsx-loader": "^0.13.2",
+    "style-loader": "^0.12.3",
+    "webpack": "~1.4.4",
+    "webpack-dev-server": "~1.6.5"
+  }
+}
